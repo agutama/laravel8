@@ -39,8 +39,8 @@ jobs:
       env:
           GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCLOUD_SERVICE_ACCOUNT_JSON }}'
           ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev
-          PROJECT: cukzlearn03
-          IMAGE_NAME: '${{ github.event.repository.name }}'
+          PROJECT_ID: cukzlearn03
+          REPO_NAME: '${{ github.event.repository.name }}'
 
       steps:
       - uses: actions/checkout@v2
@@ -57,6 +57,7 @@ jobs:
           gcloud config set account cicd-dev@cukzlearn03.iam.gserviceaccount.com
           gcloud auth activate-service-account cicd-dev@cukzlearn03.iam.gserviceaccount.com --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=cukzlearn03
           gcloud auth configure-docker $ARTIFACT_REGISTRY
-          docker build -t $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$IMAGE_NAME:latest .
-          docker build -t $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$IMAGE_NAME:d0127b3 .
-          docker image push $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$IMAGE_NAME
+          docker build -t $ARTIFACT_REGISTRY/$PROJECT_ID/test-laravel/$IMAGE_NAME:latest .
+          docker build -t $ARTIFACT_REGISTRY/$PROJECT_ID/test-laravel/$IMAGE_NAME:d0127b3 .
+          docker image push $ARTIFACT_REGISTRY/$PROJECT_ID/test-laravel/$IMAGE_NAME:latest
+          docker image push $ARTIFACT_REGISTRY/$PROJECT_ID/test-laravel/$IMAGE_NAME:d0127b3
