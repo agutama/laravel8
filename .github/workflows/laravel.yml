@@ -49,8 +49,6 @@ jobs:
           credentials_json: '${{ secrets.GCLOUD_SERVICE_ACCOUNT_JSON }}'
       - name: Upload to Artifact Registry
         run: |
-          gcloud config set artifacts/repository laravel8
-          gcloud config set artifacts/location asia-southeast2
           gcloud config set account cicd-dev@cukzlearn03.iam.gserviceaccount.com
           gcloud auth activate-service-account cicd-dev@cukzlearn03.iam.gserviceaccount.com --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=cukzlearn03
       - name: Get version
