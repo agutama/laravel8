@@ -58,4 +58,5 @@ jobs:
           gcloud auth activate-service-account cicd-dev@cukzlearn03.iam.gserviceaccount.com --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=cukzlearn03
           gcloud auth configure-docker $ARTIFACT_REGISTRY
           docker build -t $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$IMAGE_NAME:latest .
+          docker build -t $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$IMAGE_NAME:d0127b3 .
           docker image push $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$IMAGE_NAME
