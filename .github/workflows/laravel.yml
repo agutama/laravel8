@@ -53,8 +53,9 @@ jobs:
       - name: Upload to Artifact Registry
         run: |
           echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_SHA::7})"
+          echo $GITHUB_SHA_SHORT
           gcloud config set account cicd-dev@cukzlearn03.iam.gserviceaccount.com
           gcloud auth activate-service-account cicd-dev@cukzlearn03.iam.gserviceaccount.com --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=cukzlearn03
           gcloud auth configure-docker $ARTIFACT_REGISTRY
-          docker build -t $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$IMAGE_NAME:"$GITHUB_SHA_SHORT" .
+          docker build -t "$ARTIFACT_REGISTRY/$PROJECT/test-laravel/$IMAGE_NAME:$GITHUB_SHA_SHORT" .
           docker image push $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$IMAGE_NAME
