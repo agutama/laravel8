@@ -31,3 +31,26 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+
+
+  build-and-push-to-gcr-service-account:
+      name: Build & push - with service account
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: Authenticate to Google Cloud
+          id: auth
+          uses: google-github-actions/auth@v0
+          with:
+            credentials_json: '${{ secrets.GCLOUD_SERVICE_ACCOUNT_JSON }}'
+        - name: Building and pushing the image
+          uses: ./
+          with:
+            # gcloud_service_key: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }} # <- not needed when used with google-github-actions/auth@v0
+            registry: gcr.io
+            project_id: cukzlearn03
+            image_name: laravel8
+            image_tag: test-${{ github.sha }}, ${{ github.sha }}
+            dockerfile: ./Dockerfile
+            context: ./
+            target: build
