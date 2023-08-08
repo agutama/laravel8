@@ -57,7 +57,7 @@ jobs:
 
       - name: Build and push Docker
         run: |
-          gcloud auth configure-docker "${{ ARTIFACT_REGISTRY }}"
-          docker build -t "${{ ARTIFACT_REGISTRY }}"/"${{ PROJECT }}"/fleroux-docker/hello:latest .
-          docker image push "${{ ARTIFACT_REGISTRY }}"/"${{ PROJECT }}"/fleroux-docker/hello
+          gcloud auth configure-docker "${ ARTIFACT_REGISTRY }"
+          docker build -t "${ ARTIFACT_REGISTRY }"/"${ PROJECT }"/test-laravel/hello:latest .
+          docker image push "${ ARTIFACT_REGISTRY }"/"${ PROJECT }"/test-laravel/hello
         shell: bash
