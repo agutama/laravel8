@@ -41,6 +41,7 @@ jobs:
           ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev
           PROJECT: cukzlearn03
           APP: '${{ github.event.repository.name }}'
+          VER: '${{ GITHUB_SHA::7 }}'
 
       steps:
       - uses: actions/checkout@v2
@@ -58,5 +59,5 @@ jobs:
           gcloud config set account cicd-dev@cukzlearn03.iam.gserviceaccount.com
           gcloud auth activate-service-account cicd-dev@cukzlearn03.iam.gserviceaccount.com --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=cukzlearn03
           gcloud auth configure-docker $ARTIFACT_REGISTRY
-          docker build -t $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$APP:${GITHUB_SHA::7} .
+          docker build -t $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$APP:$VER .
           docker image push $ARTIFACT_REGISTRY/$PROJECT/test-laravel/$APP
