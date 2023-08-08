@@ -38,7 +38,7 @@ jobs:
       runs-on: ubuntu-latest
       env:
           GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCLOUD_SERVICE_ACCOUNT_JSON }}'
-          ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev/cukzlearn03/laravel8
+          ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev/cukzlearn03/
 
       steps:
       - uses: actions/checkout@v2
