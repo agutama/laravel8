@@ -38,7 +38,8 @@ jobs:
       runs-on: ubuntu-latest
       env:
           GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCLOUD_SERVICE_ACCOUNT_JSON }}'
-          ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev/cukzlearn03/test-laravel
+          ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev
+          PROJECT: cukzlearn03
 
       steps:
       - uses: actions/checkout@v2
@@ -54,10 +55,9 @@ jobs:
       - name: Get version
         run: echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_SHA::7})" >> $GITHUB_ENV
 
-      - name: Build and push docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ env.ARTIFACT_REGISTRY }}/${{ github.event.repository.name }}:${{ env.GITHUB_SHA_SHORT }}
+      - name: Build and push Docker
+        run: |
+          gcloud auth configure-docker "${{ ARTIFACT_REGISTRY }}"
+          docker build -t "${{ ARTIFACT_REGISTRY }}"/"${{ PROJECT }}"/fleroux-docker/hello:latest .
+          docker image push "${{ ARTIFACT_REGISTRY }}"/"${{ PROJECT }}"/fleroux-docker/hello
+        shell: bash
