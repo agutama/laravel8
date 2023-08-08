@@ -41,7 +41,7 @@ jobs:
           ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev
           PROJECT: cukzlearn03
           APP: '${{ github.event.repository.name }}'
-          VER: '${{ GITHUB_SHA::7 }}'
+          VER: '${{ github.sha }}'
 
       steps:
       - uses: actions/checkout@v2
