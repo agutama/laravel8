@@ -2,7 +2,7 @@ name: Laravel
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "gh-action" ]
 
 jobs:
   laravel-tests:
@@ -53,6 +53,8 @@ jobs:
       #     gcloud config set artifacts/location asia-southeast2
       #     gcloud config set account cicd-dev@cukzlearn03.iam.gserviceaccount.com
       #     gcloud auth activate-service-account cicd-dev@cukzlearn03.iam.gserviceaccount.com --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=cukzlearn03
+      - name: Get version
+        run: echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_SHA::7})" >> $GITHUB_ENV
 
       - name: Build and push docker image
         uses: docker/build-push-action@v3
