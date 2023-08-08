@@ -41,6 +41,7 @@ jobs:
           ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev
           PROJECT_ID: cukzlearn03
           REPO_NAME: '${{ github.event.repository.name }}'
+          IMAGE_NAME: test-laravel
 
       steps:
       - uses: actions/checkout@v2
