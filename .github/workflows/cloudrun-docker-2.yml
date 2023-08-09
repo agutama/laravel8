@@ -14,9 +14,8 @@ env:
   REGION: asia-southeast2 # TODO: update Cloud Run service region
 
 jobs:
-
   laravel-tests:
-    name: Laravel Test
+    name: laravel-tests
     runs-on: ubuntu-latest
 
     steps:
@@ -42,12 +41,8 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
       
-  build-push:
-    # Add 'id-token' with the intended permissions for workload identity federation
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-
+  build-push-deploy:
+    needs: laravel-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -79,10 +74,6 @@ jobs:
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ env.GITHUB_SHA_SHORT }}"
 
       # END - Docker auth and build
-
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v1
