@@ -1,4 +1,4 @@
-name: CI-Laravel-Dev
+name: CI-Laravel-Stg
 
 on: 
   release:
@@ -8,7 +8,7 @@ env:
   PROJECT_ID: cukzlearn03
   GAR_LOCATION: asia-southeast2
   REPOSITORY: laravel8
-  SERVICE: laravel8
+  SERVICE: laravel8-stg
   REGION: asia-southeast2
 
 jobs:
