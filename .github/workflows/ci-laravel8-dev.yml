@@ -1,4 +1,4 @@
-name: CI-Cloud Run-Laravel 
+name: CI-Laravel-Dev
 
 on: 
   workflow_dispatch:
