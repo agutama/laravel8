@@ -48,6 +48,13 @@ jobs:
       - name: Get version
         run: echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_SHA::7})" >> $GITHUB_ENV
 
+      - uses: actions/checkout@v2
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCLOUD_SERVICE_ACCOUNT_JSON }}'
+
       - name: Upload to Artifact Registry
         run: |
           gcloud config set account $SVC_ACCOUNT
