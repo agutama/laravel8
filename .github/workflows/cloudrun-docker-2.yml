@@ -1,4 +1,4 @@
-name: CLoudRun Docker
+name: CI-Cloud Run-Laravel 
 
 on: 
   workflow_dispatch:
