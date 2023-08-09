@@ -116,6 +116,9 @@ jobs:
 
       - name: Build and Push Container
         run: |-
+          gcloud config set account $SVC_ACCOUNT
+          gcloud auth activate-service-account $SVC_ACCOUNT --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$PROJECT_ID
+          gcloud auth configure-docker $ARTIFACT_REGISTRY
           docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}" ./
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}"
 
