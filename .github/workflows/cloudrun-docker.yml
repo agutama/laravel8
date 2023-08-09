@@ -115,7 +115,7 @@ jobs:
       #   password: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Build and Push Container
-        run: |-
+        run: |
           gcloud config set account $SVC_ACCOUNT
           gcloud auth activate-service-account $SVC_ACCOUNT --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=$PROJECT_ID
           gcloud auth configure-docker $ARTIFACT_REGISTRY
