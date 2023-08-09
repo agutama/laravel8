@@ -1,16 +1,14 @@
-name: CI-laravel8-dev
+name: CI-laravel8-prd
 
 on: 
-  workflow_dispatch:
-  
-  push:
-    branches: [ laravel8-dev ]
+  release:
+    types: [published]
 
 env:
   PROJECT_ID: cukzlearn03
   GAR_LOCATION: asia-southeast2
   REPOSITORY: laravel8
-  SERVICE: laravel8-dev
+  SERVICE: laravel8-prd
   REGION: asia-southeast2
 
 jobs:
@@ -47,9 +45,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Get version
-        run: echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_SHA::7})" >> $GITHUB_ENV
         
       # NOTE: Alternative option - authentication via credentials json
       - name: Google Auth
@@ -68,12 +63,6 @@ jobs:
           username: _json_key
           password: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_JSON }}
 
-      - name: Build and Push Container
-        run: |-
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ env.GITHUB_SHA_SHORT }}" ./
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ env.GITHUB_SHA_SHORT }}"
-
-      # END - Docker auth and build
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v1
@@ -81,7 +70,7 @@ jobs:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           # NOTE: If using a pre-built image, update the image name here
-          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ env.GITHUB_SHA_SHORT }}
+          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:latest
           # NOTE: You can also set env variables here:
           #  env_vars: |
           #  NODE_ENV=production
