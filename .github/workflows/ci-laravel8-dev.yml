@@ -7,11 +7,11 @@ on:
     branches: [ laravel8-dev ]
 
 env:
-  PROJECT_ID: cukzlearn03 # TODO: update Google Cloud project id
-  GAR_LOCATION: asia-southeast2 # TODO: update Artifact Registry location
-  REPOSITORY: laravel8 # TODO: update Artifact Registry repository name
-  SERVICE: test-laravel # TODO: update Cloud Run service name
-  REGION: asia-southeast2 # TODO: update Cloud Run service region
+  PROJECT_ID: cukzlearn03
+  GAR_LOCATION: asia-southeast2
+  REPOSITORY: laravel8
+  SERVICE: laravel8-dev
+  REGION: asia-southeast2
 
 jobs:
   laravel-tests:
