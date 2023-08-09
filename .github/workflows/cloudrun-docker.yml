@@ -1,8 +1,8 @@
 name: CI Laravel
 
-on:
-  push:
-    branches: [ "main" ]
+on: 
+  workflow_dispatch:
+
 env:
   PROJECT_ID: cukzlearn03 # TODO: update Google Cloud project id
   GAR_LOCATION: asia-southeast2 # TODO: update Artifact Registry location
